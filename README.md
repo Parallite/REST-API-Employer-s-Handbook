@@ -64,6 +64,6 @@ API Document endpoints:
 
 <h2>API endpoints:</h2>
 
-<p>API Document endpoints: - swagger: http://localhost:YOURPORT/api-docs/</p>
+<p>API Document endpoints swagger: http://localhost:YOURPORT/api-docs/</p>
 
 <p align="center"><img src="https://github.com/Parallite/REST-API-Employer-s-Handbook/blob/main/assets/endpoints/endpoints.png" alt="endpoints-image"></p>

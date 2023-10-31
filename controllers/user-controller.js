@@ -1,7 +1,6 @@
 import UserService from '../services/user-service.js'
 import { validationResult } from 'express-validator';
 import { ApiError } from '../exceptions/api-error.js';
-import avatarService from '../services/avatar-service.js';
 
 class UserController {
     async registration(req, res, next) {
