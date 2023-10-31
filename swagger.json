@@ -1,0 +1,1268 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "REST API for Employer's Handbook project",
+        "description": "Documentation for Employer's Handbook project.",
+        "contact": {
+            "name": "Lobodanov Sergei",
+            "url": "https://github.com/Parallite",
+            "email": "lobodanov.dev@gmail.com"
+        }
+    },
+    "schemes": [
+        "http"
+    ],
+    "servers": [
+        {
+            "url": "http://localhost:8000/",
+            "description": "Development server"
+        }
+    ],
+    "paths": {
+        "/api/users/all": {
+            "get": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Get all Users. (authorization required)",
+                "description": "Array of User object (authorization required)",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Array of User object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Users"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/user/registration": {
+            "post": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Create a new User",
+                "description": "Create a new User. If the email already exists then the server will throw an error aboit it. Use a valid email address and password. Be careful, password should contain at least 3 characters and no more than 32",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserRegistrationRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. The token and user result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/users/user/login": {
+            "post": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "User Login",
+                "description": "User Login. Use a valid email address and password",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. The token and user result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/api/users/user/refresh": {
+            "get": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Refresh User Token",
+                "description": "Takes your Refresh Token, which you received after loggin in. Gives a new Access and Refresh Token. (refresh token require)",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. The new tokens and user result",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserAuthResponse"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "cookieAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/user/{id}": {
+            "get": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Get User by ID. (authorization required)",
+                "description": "Get User by ID (authorization required).",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of User",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "5435c3ca7fabedc2926a2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. User object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/user/edit/{id}": {
+            "patch": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Edit information about current authorization User by ID. (authorization required)",
+                "description": "Edit information about current authorization User by ID (authorization required). Be careful, if there is a User in the database with the same First Name and Lst Name as a current authorized User, the server will throw an error.",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of User",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "5435c3ca7fabedc2926a2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "New data of User. Be careful with User ID in requestBody",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. User object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/user/current": {
+            "get": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Get current authorization User. (authorization required)",
+                "description": "Get current authorization User (authorization required)",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. User object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/users/user/remove/{id}": {
+            "delete": {
+                "tags": [
+                    "Users Controller"
+                ],
+                "summary": "Remove a current authorization User by ID. (authorization required)",
+                "description": "Remove a current authorization User by ID from database. (authorization required). Be carefull, all employees associated with this User will also be deleted from the database.",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of current authorization User that needs to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "5435c3ca7fabedc2926a2"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "204": {
+                        "description": "The resource was deleted successfully."
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/all": {
+            "get": {
+                "tags": [
+                    "Employees Controller"
+                ],
+                "summary": "Get all Employees. (authorization required)",
+                "description": "Array of Employee object (authorization required)",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Array of Employee object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employees"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/employee/{id}": {
+            "get": {
+                "tags": [
+                    "Employees Controller"
+                ],
+                "summary": "Get Employee by ID. (authorization required)",
+                "description": "Get Employee by ID (authorization required).",
+                "operationId": "getEmployeeById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Employee",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "9724c3ca7faskuc2962a1"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Employee object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employee"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/employee/add": {
+            "post": {
+                "tags": [
+                    "Employees Controller"
+                ],
+                "summary": "Create a new Employee. (authorization required) ",
+                "description": "Create a new Employee (authorization required). Be careful, if there is a Employee in the database with the same First Name and Last Name, the server will throw an error.",
+                "requestBody": {
+                    "required": true,
+                    "description": "Data of Employee.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmployeeRequestAdd"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Employee object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employee"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/employee/edit/{id}": {
+            "patch": {
+                "tags": [
+                    "Employees Controller"
+                ],
+                "summary": "Edit information about Employee by ID. (authorization required)",
+                "description": "Edit information about Employee by ID (authorization required). Be careful, if there is a Employee in the database with the same First Name and Lst Name, the server will throw an error.",
+                "operationId": "getEmployeeById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Employee",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "9724c3ca7faskuc2962a1"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "description": "Data of Employee.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/EmployeeRequestAdd"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Employee object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Employee"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/employees/employee/remove/{id}": {
+            "delete": {
+                "tags": [
+                    "Employees Controller"
+                ],
+                "summary": "Remove a Employee by ID. (authorization required)",
+                "description": "Remove a Employee by ID from database. (authorization required). Be careful, only associated users have the permission to delete",
+                "operationId": "getUserById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Employee",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "9724c3ca7faskuc2962a1"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "204": {
+                        "description": "The resource was deleted successfully."
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/avatars/all": {
+            "get": {
+                "tags": [
+                    "Avatars Controller"
+                ],
+                "summary": "Get all Avatars. (authorization required)",
+                "description": "Array of Avatar object (authorization required)",
+                "requestBody": {
+                    "required": false
+                },
+                "responses": {
+                    "200": {
+                        "description": "Success. Array of Avatar object.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Avatars"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid Api Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/InvalidApiRequest"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UnauthorizedError"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "JWT Authorization header using the Bearer scheme",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            },
+            "cookieAuth": {
+                "type": "apiKey",
+                "in": "cookie",
+                "name": "refreshToken"
+            }
+        },
+        "schemas": {
+            "UserRegistrationRequest": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "example": "Ivan"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Ivanov"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "IvanIvanov@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "Ivan12345"
+                    }
+                }
+            },
+            "UserLoginRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "IvanIvanov@gmail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "Ivan12345"
+                    }
+                }
+            },
+            "UserAuthResponse": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N..."
+                    },
+                    "refreshToken": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM..."
+                    },
+                    "user": {
+                        "type": "object",
+                        "properties": {
+                            "_id": {
+                                "type": "string",
+                                "example": "5435c3ca7fabedc2926a2"
+                            },
+                            "email": {
+                                "type": "string",
+                                "example": "IvanIvanov@gmail.com"
+                            },
+                            "firstName": {
+                                "type": "string",
+                                "example": "Ivan"
+                            },
+                            "lastName": {
+                                "type": "string",
+                                "example": "Ivanov"
+                            },
+                            "room": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "department": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "telephone": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "about": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "position": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "avatar": {
+                                "type": "string",
+                                "example": ""
+                            },
+                            "employeesId": {
+                                "type": "array",
+                                "example": []
+                            }
+                        }
+                    }
+                }
+            },
+            "Users": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "string",
+                            "example": "5435c3ca7fabedc2926a2"
+                        },
+                        "email": {
+                            "type": "string",
+                            "example": "IvanIvanov@gmail.com"
+                        },
+                        "firstName": {
+                            "type": "string",
+                            "example": "Ivan"
+                        },
+                        "lastName": {
+                            "type": "string",
+                            "example": "Ivanov"
+                        },
+                        "room": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "department": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "telephone": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "about": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "position": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "avatar": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "employeesId": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "$ref": "#/components/schemas/Employee"
+                            }
+                        }
+                    }
+                }
+            },
+            "User": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "example": "5435c3ca7fabedc2926a2"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "IvanIvanov@gmail.com"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "Ivan"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Ivanov"
+                    },
+                    "room": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "department": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "about": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "position": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "employeesId": {
+                        "type": "array",
+                        "example": []
+                    }
+                }
+            },
+            "Employees": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "_id": {
+                            "type": "string",
+                            "example": "9724c3ca7faskuc2962a1"
+                        },
+                        "email": {
+                            "type": "string",
+                            "example": "PeterPetrov@gmail.com"
+                        },
+                        "firstName": {
+                            "type": "string",
+                            "example": "Peter"
+                        },
+                        "lastName": {
+                            "type": "string",
+                            "example": "Petrov"
+                        },
+                        "room": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "department": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "telephone": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "position": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "avatar": {
+                            "type": "string",
+                            "example": ""
+                        },
+                        "userId": {
+                            "type": "object",
+                            "$ref": "#/components/schemas/User"
+                        }
+                    }
+                }
+            },
+            "Employee": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "example": "9724c3ca7faskuc2962a1"
+                    },
+                    "firstName": {
+                        "type": "string",
+                        "example": "Peter"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Petrov"
+                    },
+                    "room": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "department": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "position": {
+                        "type": "string",
+                        "example": ""
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": "default"
+                    },
+                    "userId": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/User"
+                    }
+                }
+            },
+            "EmployeeRequestAdd": {
+                "type": "object",
+                "properties": {
+                    "firstName": {
+                        "type": "string",
+                        "example": "Peter"
+                    },
+                    "lastName": {
+                        "type": "string",
+                        "example": "Petrov"
+                    },
+                    "room": {
+                        "type": "string",
+                        "example": "12"
+                    },
+                    "department": {
+                        "type": "string",
+                        "example": "department name"
+                    },
+                    "telephone": {
+                        "type": "string",
+                        "example": "12345"
+                    },
+                    "position": {
+                        "type": "string",
+                        "example": "position name"
+                    },
+                    "avatar": {
+                        "type": "string",
+                        "example": "default"
+                    }
+                }
+            },
+            "Avatar": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "string",
+                        "example": "64cbbb0da605c98a5c636041"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "old-man-with-glasses"
+                    }
+                }
+            },
+            "Avatars": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "$ref": "#/components/schemas/Avatar"
+                }
+            },
+            "InvalidApiRequest": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "...here is the error text..."
+                    },
+                    "errors": {
+                        "type": "array",
+                        "example": []
+                    }
+                }
+            },
+            "UnauthorizedError": {
+                "type": "object",
+                "properties": {
+                    "message": {
+                        "type": "string",
+                        "example": "Пользователь не авторизован"
+                    },
+                    "errors": {
+                        "type": "array",
+                        "example": []
+                    }
+                }
+            },
+            "Token": {
+                "type": "object",
+                "properties": {
+                    "accessToken": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2N..."
+                    },
+                    "refreshToken": {
+                        "type": "string",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTM..."
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        {
+            "bearerAuth": []
+        }
+    ]
+}
