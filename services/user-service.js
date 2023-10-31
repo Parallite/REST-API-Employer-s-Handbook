@@ -72,7 +72,6 @@ class UserService {
         return userDto
     }
     async getCurrentUser(refreshToken) {
-        console.log(111);
         const userData = await tokenService.validateRefreshToken(refreshToken);
         const user = await User.findById(userData._id).populate('employeesId');
         const userDto = new UserDto(user)
