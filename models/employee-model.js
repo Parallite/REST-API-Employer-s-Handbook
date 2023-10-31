@@ -11,13 +11,25 @@ const EmployeeShema = new Schema({
         type: String,
         required: true,
     },
-    age: {
-        type: Number,
-        required: true,
-    },
-    address: {
+    room: {
         type: String,
         required: true,
+    },
+    department: {
+        type: String,
+        default: ''
+    },
+    telephone: {
+        type: String,
+        default: ''
+    },
+    position: {
+        type: String,
+        default: ''
+    },
+    avatar: {
+        type: String,
+        default: ''
     },
     userId: {
         type: Schema.Types.ObjectId,
