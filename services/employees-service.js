@@ -45,7 +45,7 @@ class EmployeesService {
         const createdEmployee = (await Employee.create(newEmployeeData)).populate('userId');
 
         await User.findByIdAndUpdate(currentUser._id, { $push: { employeesId: (await createdEmployee)._id } })
-        const createdEmployeeToClient = await Employee.find(
+        const createdEmployeeToClient = await Employee.findOne(
             { firstName: data.firstName, lastName: data.lastName },
             '-createdAt -updatedAt -__v -field')
             .populate('userId', '-password -createdAt -updatedAt -__v -field');
