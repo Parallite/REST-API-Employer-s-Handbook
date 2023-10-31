@@ -15,41 +15,65 @@ git clone  https://github.com/Parallite/REST-API-Employer-s-Handbook.git
 <p>2. Установить зависимости:</p>
 
 ```
-cd project_name npm install
+cd project_name
+```
+
+```
+npm install
 ```
 
 <p>3. Создать файл .env и заполнить его по аналогии с имеющимся в проекте файлом .env.sample. Либо скопировать нижеприведенный дефолтный код и вставить его в файл .env</p>
 
 ```
+
 PORT="8000"
 JWT_ACCESS_SECRET="JWT-TEST-ACCESS-SECRET"
 JWT_REFRESH_SECRET="JWT-TEST-REFRESH-SECRET"
 DB_URL="mongodb://localhost:27017/Handbook"
 CLIENT_URL="http://localhost:YOURCLIENTPORT"
+
 ```
 
 <p>4. Запустить сервер в режиме разработки:</p>
 
 ```
+
 npm run server
+
 ```
 
 <p>5. Проверить статус сервера можно по адресу :</p>
 
 ```
+
 http://localhost:YOURPORT/status
-или
+
+```
+
+<p>или</p>
+
+```
+
 http://localhost:8000/status
+
 ```
 
 <p>6. Перейти по адресу и ознакомиться с подробной документацией:</p>
 
-```
-API Document endpoints:
-    - swagger: http://localhost:YOURPORT/api-docs/
+<p>API Document endpoints swagger</p>
 
-Дефолтный адрес:
-    - swagger: http://localhost:8000/api-docs/
+```
+
+http://localhost:YOURPORT/api-docs/
+
+```
+
+<p>или</p>
+
+```
+
+http://localhost:8000/api-docs/
+
 ```
 
 <h2>💻 Стек технологий:</h2>
@@ -64,6 +88,13 @@ API Document endpoints:
 
 <h2>API endpoints:</h2>
 
-<p>API Document endpoints swagger: http://localhost:YOURPORT/api-docs/</p>
+<p>API Document endpoints swagger:</p>
+
+```
+
+http://localhost:8000/api-docs/
+
+```
 
 <p align="center"><img src="https://github.com/Parallite/REST-API-Employer-s-Handbook/blob/main/assets/endpoints/swagger.png" alt="swagger-endpoints-image"></p>
+```
