@@ -1,4 +1,3 @@
-import { ApiError } from '../exceptions/api-error.js';
 import avatarService from '../services/avatar-service.js';
 
 class AvatarController {
