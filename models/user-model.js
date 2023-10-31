@@ -12,10 +12,37 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    name: {
+    firstName: {
         type: String,
         required: true,
-        unique: true
+    },
+    lastName: {
+        type: String,
+        required: true,
+    },
+    room: {
+        type: String,
+        default: ''
+    },
+    department: {
+        type: String,
+        default: ''
+    },
+    telephone: {
+        type: String,
+        default: ''
+    },
+    position: {
+        type: String,
+        default: ''
+    },
+    about: {
+        type: String,
+        default: ''
+    },
+    avatar: {
+        type: String,
+        default: ''
     },
     employeesId: [
         {

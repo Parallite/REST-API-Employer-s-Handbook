@@ -1,5 +1,5 @@
 {
-  "name": "employees-project",
+  "name": "rest-api-employer-s-handbook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -22,7 +22,11 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "@types/swagger-jsdoc": "^6.0.2",
+    "@types/swagger-ui-express": "^4.1.5",
     "nodemon": "^2.0.22",
-    "prisma": "^4.14.0"
+    "prisma": "^4.14.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   }
 }
