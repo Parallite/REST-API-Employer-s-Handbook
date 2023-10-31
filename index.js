@@ -2,7 +2,6 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
-import path from 'path'
 import logger from 'morgan';
 
 import fs from 'fs';

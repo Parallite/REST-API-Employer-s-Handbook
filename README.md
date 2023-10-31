@@ -1,6 +1,6 @@
 <h1 align="center" id="title">REST API Employer's Handbook</h1>
 
-<p align="center"><img src="https://github.com/Parallite/REST-API-Employer-s-Handbook/blob/develop/icon/icon.png" alt="project-image"></p>
+<p align="center"><img src="https://github.com/Parallite/REST-API-Employer-s-Handbook/blob/main/assets/icon/icon.png" alt="project-image"></p>
 
 <p id="description">REST API Employer's Handbook - представляет собой небольшой веб-сервер реализованный с помощью Node.js и Express с аутентификацией JWT (JSON Web Tokens). В качестве базы данных используется MongoDB.</p>
 
@@ -18,7 +18,7 @@ git clone  https://github.com/Parallite/REST-API-Employer-s-Handbook.git
 cd project_name npm install
 ```
 
-<p>3. Создать файл .env и заполнить его по аналоги с имеющимся в проекте файлом .env.sample. Либо скопировать нижеприведенный дефолтный код и вставить его в файл .env</p>
+<p>3. Создать файл .env и заполнить его по аналогии с имеющимся в проекте файлом .env.sample. Либо скопировать нижеприведенный дефолтный код и вставить его в файл .env</p>
 
 ```
 PORT="8000"
@@ -61,3 +61,9 @@ API Document endpoints:
 - JWT (JSON Web Tokens)
 - JWT (bcrypt)
 - Swagger
+
+<h2>API endpoints:</h2>
+
+<p>API Document endpoints: - swagger: http://localhost:YOURPORT/api-docs/</p>
+
+<p align="center"><img src="https://github.com/Parallite/REST-API-Employer-s-Handbook/blob/main/assets/endpoints/endpoints.png" alt="endpoints-image"></p>
